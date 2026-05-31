@@ -14,17 +14,21 @@ let holes = JSON.parse(
 
 function saveHole() {
 
+    const par =
+        document.getElementById("parInput").value;
+
     const score =
         document.getElementById("scoreInput").value;
 
-    if (!score) {
-        alert("Enter a hole score.");
+    if (!par || !score) {
+        alert("Enter par and score.");
         return;
     }
 
     const holeRecord = {
         roundId: currentRound.id,
         hole: currentHole,
+        par: Number(par),
         score: Number(score)
     };
 
