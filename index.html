@@ -5,18 +5,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div id="splashScreen">
+    <img src="GolfShotTracker.png" alt="Golf Shot Tracker Loading Screen">
 
+    <div class="loading-circle"></div>
+</div>
 <h1>Golf Shot Tracker</h1>
 <div class="card" id="homeCard">
 
     <h2>Home</h2>
-
+        <button onclick="goHome()">Home</button>
     <button onclick="showRoundSetup()">
         Start Round
     </button>
 
     <button onclick="continueRound()">
         Continue Round
+
     </button>
 
 </div>
@@ -33,8 +38,14 @@
 </div>
 
 <div class="card" id="shotTrackerCard">
-    <h2 id="roundTitle">No Round Started</h2>
+<h2 id="roundTitle">No Round Started</h2>
+
+<div class="hole-header">
     <h3>Current Hole: <span id="currentHole">1</span></h3>
+
+    <button onclick="previousHole()">Previous Hole</button>
+    <button onclick="nextHole()">Next Hole</button>
+</div>
 
     <label>Club</label>
 <select id="clubInput">
@@ -81,7 +92,6 @@
         <label>Hole Score</label>
         <input id="scoreInput" type="number" placeholder="5">
     <button onclick="saveShot()">Save Shot</button>
-    <button onclick="nextHole()">Next Hole</button>
     <button onclick="showStats()">Show Stats</button>
     <button onclick="exportShots()">Export Data</button>
     <button onclick="clearShots()">Clear Shots</button>
@@ -98,6 +108,17 @@
     <p>Date: <span id="summaryDate">None</span></p>
     <p>Current Hole: <span id="summaryHole">1</span></p>
     <p>Shots Recorded: <span id="summaryShots">0</span></p>
+</div>
+
+<div class="card" id="scorecardCard">
+    <h2>Scorecard</h2>
+
+    <div id="scorecardList"></div>
+
+    <h3>Round Totals</h3>
+    <p>Total Par: <span id="totalPar">0</span></p>
+    <p>Total Score: <span id="totalScore">0</span></p>
+    <p>Round Status: <span id="roundStatus">E</span></p>
 </div>
 
 <div class="card" id="recentShotsCard">

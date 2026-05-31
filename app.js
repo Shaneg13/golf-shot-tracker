@@ -1,4 +1,4 @@
-let currentHole = 1;
+let currentHole = Number(localStorage.getItem("currentHole")) || 1;
 
 let currentRound = JSON.parse(
     localStorage.getItem("currentRound")
@@ -11,6 +11,13 @@ let shots = JSON.parse(
 let holes = JSON.parse(
     localStorage.getItem("holes")
 ) || [];
+
+function updateHoleDisplay() {
+    document.getElementById("currentHole").textContent = currentHole;
+    document.getElementById("summaryHole").textContent = currentHole;
+
+    localStorage.setItem("currentHole", currentHole);
+}
 
 function saveHole() {
 
@@ -25,6 +32,13 @@ function saveHole() {
         return;
     }
 
+    holes = holes.filter(function(hole) {
+        return !(
+            hole.roundId === currentRound.id &&
+            hole.hole === currentHole
+        );
+    });
+
     const holeRecord = {
         roundId: currentRound.id,
         hole: currentHole,
@@ -34,16 +48,101 @@ function saveHole() {
 
     holes.push(holeRecord);
 
-    localStorage.setItem(
-        "holes",
-        JSON.stringify(holes)
-    );
+localStorage.setItem(
+    "holes",
+    JSON.stringify(holes)
+);
 
-    alert(
-        "Hole " +
-        currentHole +
-        " score saved."
-    );
+renderScorecard();
+
+alert(
+    "Hole " +
+    currentHole +
+    " score saved."
+);
+}
+
+function renderScorecard() {
+
+    const scorecardList =
+        document.getElementById("scorecardList");
+
+    scorecardList.innerHTML = "";
+
+    let totalPar = 0;
+    let totalScore = 0;
+
+    if (!currentRound) {
+        return;
+    }
+
+    const currentRoundHoles =
+        holes.filter(function(hole) {
+            return hole.roundId === currentRound.id;
+        });
+
+    currentRoundHoles
+        .sort(function(a, b) {
+            return a.hole - b.hole;
+        })
+        .forEach(function(hole) {
+
+            totalPar += hole.par;
+            totalScore += hole.score;
+
+            const difference =
+                hole.score - hole.par;
+
+            let status = "E";
+
+            if (difference > 0) {
+                status = "+" + difference;
+            }
+
+            if (difference < 0) {
+                status = difference;
+            }
+
+            const item =
+                document.createElement("div");
+
+            item.className = "scorecard-item";
+
+            item.textContent =
+                "Hole " +
+                hole.hole +
+                " | Par " +
+                hole.par +
+                " | Score " +
+                hole.score +
+                " | " +
+                status;
+
+            scorecardList.appendChild(item);
+
+        });
+
+    const roundDifference =
+        totalScore - totalPar;
+
+    let roundStatus = "E";
+
+    if (roundDifference > 0) {
+        roundStatus = "+" + roundDifference;
+    }
+
+    if (roundDifference < 0) {
+        roundStatus = roundDifference;
+    }
+
+    document.getElementById("totalPar").textContent =
+        totalPar;
+
+    document.getElementById("totalScore").textContent =
+        totalScore;
+
+    document.getElementById("roundStatus").textContent =
+        roundStatus;
 }
 
 function saveRound() {
@@ -66,16 +165,20 @@ function saveRound() {
         date: date
     };
 
-    localStorage.setItem(
-        "currentRound",
-        JSON.stringify(currentRound)
-    );
+localStorage.setItem(
+    "currentRound",
+    JSON.stringify(currentRound)
+);
 
-    document.getElementById("roundTitle").textContent =
-        course + " - " + date;
+currentHole = 1;
+localStorage.setItem("currentHole", currentHole);
 
-        updateSummary();
-        continueRound();
+document.getElementById("roundTitle").textContent =
+    course + " - " + date;
+
+updateHoleDisplay();
+updateSummary();
+continueRound();
 }
 
 function saveShot() {
@@ -167,11 +270,21 @@ function updateSummary() {
 }
 
 function nextHole() {
-    currentHole++;
-    document.getElementById("currentHole").textContent =
-        currentHole;
+    if (currentHole < 18) {
+        currentHole++;
+        updateHoleDisplay();
+    } else {
+        alert("You are already on Hole 18.");
+    }
+}
 
-        updateSummary();
+function previousHole() {
+    if (currentHole > 1) {
+        currentHole--;
+        updateHoleDisplay();
+    } else {
+        alert("You are already on Hole 1.");
+    }
 }
 
 function renderShots() {
@@ -181,31 +294,73 @@ function renderShots() {
 
     shotList.innerHTML = "";
 
-    shots
-        .slice(-15)
-        .reverse()
-        .forEach(function(shot) {
+    if (!currentRound) {
+        shotList.textContent = "No round started.";
+        return;
+    }
 
-            const item =
-                document.createElement("div");
+    const currentRoundShots =
+        shots.filter(function(shot) {
+            return shot.roundId === currentRound.id;
+        });
 
-            item.className = "shot-item";
+    if (currentRoundShots.length === 0) {
+        shotList.textContent = "No shots recorded yet.";
+        return;
+    }
 
-item.textContent =
-    "H" +
-    shot.hole +
-    " S" +
-    shot.shotNumber +
-    " | " +
-    shot.club +
-    " | " +
-    shot.distance +
-    " yds | " +
-    shot.result +
-    " | " +
-    shot.lie;
+    const groupedShots = {};
 
-            shotList.appendChild(item);
+    currentRoundShots.forEach(function(shot) {
+
+        if (!groupedShots[shot.hole]) {
+            groupedShots[shot.hole] = [];
+        }
+
+        groupedShots[shot.hole].push(shot);
+
+    });
+
+    Object.keys(groupedShots)
+        .sort(function(a, b) {
+            return Number(a) - Number(b);
+        })
+        .forEach(function(holeNumber) {
+
+            const holeHeader =
+                document.createElement("h3");
+
+            holeHeader.textContent =
+                "Hole " + holeNumber;
+
+            shotList.appendChild(holeHeader);
+
+            groupedShots[holeNumber]
+                .sort(function(a, b) {
+                    return a.shotNumber - b.shotNumber;
+                })
+                .forEach(function(shot) {
+
+                    const item =
+                        document.createElement("div");
+
+                    item.className = "shot-item";
+
+                    item.textContent =
+                        "Shot " +
+                        shot.shotNumber +
+                        " | " +
+                        shot.club +
+                        " | " +
+                        shot.distance +
+                        " yds | " +
+                        shot.result +
+                        " | " +
+                        shot.lie;
+
+                    shotList.appendChild(item);
+
+                });
 
         });
 }
@@ -276,6 +431,12 @@ function showRoundSetup() {
 
     document.getElementById("recentShotsCard").style.display =
         "none";
+
+    document.getElementById("scorecardCard").style.display =
+        "none";
+
+    document.getElementById("homeCard").style.display =
+        "none";
 }
 
 function continueRound() {
@@ -291,8 +452,16 @@ function continueRound() {
 
     document.getElementById("recentShotsCard").style.display =
         "block";
+    
+    document.getElementById("scorecardCard").style.display =
+        "block";
 
+    document.getElementById("homeCard").style.display =
+        "none";
+
+    updateHoleDisplay();
     renderShots();
+    renderScorecard();
     updateSummary();
 }
 
@@ -353,3 +522,17 @@ document.getElementById("summaryCard").style.display =
 
 document.getElementById("recentShotsCard").style.display =
     "none";
+
+document.getElementById("scorecardCard").style.display =
+    "none";
+
+    window.addEventListener("load", function() {
+
+    setTimeout(function() {
+
+        document.getElementById("splashScreen").style.display =
+            "none";
+
+    }, 3000);
+
+});
