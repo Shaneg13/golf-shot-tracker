@@ -75,6 +75,7 @@ function saveRound() {
         course + " - " + date;
 
         updateSummary();
+        continueRound();
 }
 
 function saveShot() {
