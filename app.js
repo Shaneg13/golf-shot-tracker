@@ -87,6 +87,14 @@ function saveShot() {
     const club =
         document.getElementById("clubInput").value;
 
+    const clubSelect =
+        document.getElementById("clubInput");
+
+    const loft =
+        clubSelect.options[
+            clubSelect.selectedIndex
+        ].dataset.loft;
+
     const distance =
         document.getElementById("distanceInput").value;
         
@@ -110,12 +118,13 @@ const shotNumber =
         return;
     }
 
-    const shot = {
+const shot = {
     roundId: currentRound.id,
     course: currentRound.course,
     roundDate: currentRound.date,
     hole: currentHole,
     club: club,
+    loft: loft,
     distance: Number(distance),
     result: result,
     lie: lie,

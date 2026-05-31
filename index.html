@@ -24,8 +24,22 @@
     <h2 id="roundTitle">No Round Started</h2>
     <h3>Current Hole: <span id="currentHole">1</span></h3>
 
-    <label>Club</label>
-    <input id="clubInput" placeholder="7 Iron">
+<label>Club</label>
+<select id="clubInput">
+    <option value="Driver" data-loft="9°">Driver - 9°</option>
+    <option value="3 Wood" data-loft="15°">3 Wood - 15°</option>
+    <option value="3 Hybrid" data-loft="18°">3 Hybrid - 18°</option>
+    <option value="5 Iron" data-loft="21°">5 Iron - 21°</option>
+    <option value="6 Iron" data-loft="24°">6 Iron - 24°</option>
+    <option value="7 Iron" data-loft="28°">7 Iron - 28°</option>
+    <option value="8 Iron" data-loft="32°">8 Iron - 32°</option>
+    <option value="9 Iron" data-loft="37°">9 Iron - 37°</option>
+    <option value="PW" data-loft="43°">PW - 43°</option>
+    <option value="AW" data-loft="49°">AW - 49°</option>
+    <option value="56" data-loft="56°">56 - 56°</option>
+    <option value="60" data-loft="60°">60 - 60°</option>
+    <option value="Putter" data-loft="">Putter</option>
+</select>
 
     <label>Distance</label>
     <input id="distanceInput" placeholder="154">
