@@ -108,15 +108,17 @@ function renderShots() {
 
             item.className = "shot-item";
 
-            item.textContent =
+item.textContent =
     "H" +
     shot.hole +
     " | " +
     shot.club +
     " | " +
     shot.distance +
-                " yds | " +
-                shot.result;
+    " yds | " +
+    shot.result +
+    " | " +
+    shot.lie;(
 
             shotList.appendChild(item);
 
