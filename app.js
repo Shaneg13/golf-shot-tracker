@@ -552,13 +552,21 @@ document.getElementById("recentShotsCard").style.display =
 document.getElementById("scorecardCard").style.display =
     "none";
 
-    window.addEventListener("load", function() {
+window.addEventListener("load", function() {
 
     setTimeout(function() {
 
-        document.getElementById("splashScreen").style.display =
-            "none";
+        const splash =
+            document.getElementById("splashScreen");
 
-    }, 3000);
+        splash.style.opacity =
+            "0";
+
+        setTimeout(function() {
+            splash.style.display =
+                "none";
+        }, 500);
+
+    }, 4000);
 
 });
