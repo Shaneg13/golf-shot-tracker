@@ -8,12 +8,24 @@
 
 <h1>Golf Shot Tracker</h1>
 
-<button>Start Round</button>
-<button onclick="addShot()">Add Shot</button>
-<button onclick="viewShots()">View Shots</button>
-<button>Stats</button>
+<div class="card">
+    <h2>Current Hole: <span id="currentHole">1</span></h2>
+
+    <label>Club</label>
+    <input id="clubInput" placeholder="7 Iron">
+
+    <label>Distance</label>
+    <input id="distanceInput" placeholder="154">
+
+    <button onclick="saveShot()">Save Shot</button>
+    <button onclick="nextHole()">Next Hole</button>
+</div>
+
+<div class="card">
+    <h2>Recent Shots</h2>
+    <div id="shotList"></div>
+</div>
 
 <script src="app.js"></script>
-
 </body>
 </html>
