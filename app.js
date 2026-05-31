@@ -51,6 +51,9 @@ function saveShot() {
         
     const result =
         document.getElementById("resultInput").value;
+        
+    const lie =
+        document.getElementById("lieInput").value;
 
     if (!club || !distance) {
         alert("Enter club and distance.");
@@ -65,6 +68,7 @@ function saveShot() {
     club: club,
     distance: Number(distance),
     result: result,
+    lie: lie,
     timestamp: new Date().toISOString()
 };
 
