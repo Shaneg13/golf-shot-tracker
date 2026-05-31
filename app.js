@@ -121,6 +121,8 @@ function renderShots() {
 item.textContent =
     "H" +
     shot.hole +
+    " S" +
+    shot.shotNumber +
     " | " +
     shot.club +
     " | " +
