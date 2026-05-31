@@ -48,6 +48,9 @@ function saveShot() {
 
     const distance =
         document.getElementById("distanceInput").value;
+        
+    const result =
+        document.getElementById("resultInput").value;
 
     if (!club || !distance) {
         alert("Enter club and distance.");
@@ -55,14 +58,15 @@ function saveShot() {
     }
 
     const shot = {
-        roundId: currentRound.id,
-        course: currentRound.course,
-        roundDate: currentRound.date,
-        hole: currentHole,
-        club: club,
-        distance: Number(distance),
-        timestamp: new Date().toISOString()
-    };
+    roundId: currentRound.id,
+    course: currentRound.course,
+    roundDate: currentRound.date,
+    hole: currentHole,
+    club: club,
+    distance: Number(distance),
+    result: result,
+    timestamp: new Date().toISOString()
+};
 
     shots.push(shot);
 
@@ -101,14 +105,14 @@ function renderShots() {
             item.className = "shot-item";
 
             item.textContent =
-                shot.course +
-                " | H" +
-                shot.hole +
-                " | " +
-                shot.club +
-                " | " +
-                shot.distance +
-                " yds";
+    "H" +
+    shot.hole +
+    " | " +
+    shot.club +
+    " | " +
+    shot.distance +
+                " yds | " +
+                shot.result;
 
             shotList.appendChild(item);
 
