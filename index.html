@@ -9,7 +9,20 @@
 <h1>Golf Shot Tracker</h1>
 
 <div class="card">
-    <h2>Current Hole: <span id="currentHole">1</span></h2>
+    <h2>Round Setup</h2>
+
+    <label>Course</label>
+    <input id="courseInput" placeholder="Whitinsville GC">
+
+    <label>Round Date</label>
+    <input id="dateInput" type="date">
+
+    <button onclick="saveRound()">Save Round</button>
+</div>
+
+<div class="card">
+    <h2 id="roundTitle">No Round Started</h2>
+    <h3>Current Hole: <span id="currentHole">1</span></h3>
 
     <label>Club</label>
     <input id="clubInput" placeholder="7 Iron">
