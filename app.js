@@ -8,6 +8,10 @@ let shots = JSON.parse(
     localStorage.getItem("shots")
 ) || [];
 
+let holes = JSON.parse(
+    localStorage.getItem("holes")
+) || [];
+
 function saveRound() {
 
     const course =
@@ -34,6 +38,8 @@ function saveRound() {
 
     document.getElementById("roundTitle").textContent =
         course + " - " + date;
+
+        updateSummary();
 }
 
 function saveShot() {
@@ -82,6 +88,8 @@ const shotNumber =
     timestamp: new Date().toISOString()
 };
 
+    console.log(shot);
+
     shots.push(shot);
 
     localStorage.setItem(
@@ -93,12 +101,32 @@ const shotNumber =
     document.getElementById("distanceInput").value = "";
 
     renderShots();
+    updateSummary();
+}
+
+    function updateSummary() {
+
+    document.getElementById("summaryHole").textContent =
+        currentHole;
+
+    document.getElementById("summaryShots").textContent =
+        shots.length;
+
+    if (currentRound) {
+        document.getElementById("summaryCourse").textContent =
+            currentRound.course;
+
+        document.getElementById("summaryDate").textContent =
+            currentRound.date;
+    }
 }
 
 function nextHole() {
     currentHole++;
     document.getElementById("currentHole").textContent =
         currentHole;
+
+        updateSummary();
 }
 
 function renderShots() {
@@ -147,6 +175,7 @@ if (currentRound) {
 }
 
 renderShots();
+updateSummary();
 
 function clearShots() {
 
@@ -162,6 +191,7 @@ function clearShots() {
     );
 
     renderShots();
+    updateSummary();
 }
 
 function exportShots() {

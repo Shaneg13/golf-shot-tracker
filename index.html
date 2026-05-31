@@ -50,16 +50,23 @@
     <option value="Recovery">Recovery</option>
     <option value="Green">Green</option>
 </select>
+        <label>Hole Score</label>
+        <input id="scoreInput" type="number" placeholder="5">
     <button onclick="saveShot()">Save Shot</button>
     <button onclick="nextHole()">Next Hole</button>
     <button onclick="showStats()">Show Stats</button>
     <button onclick="exportShots()">Export Data</button>
     <button onclick="clearShots()">Clear Shots</button>
+
+
 </div>
 
 <div class="card">
-    <h2>Recent Shots</h2>
-    <div id="shotList"></div>
+    <h2>Round Summary</h2>
+    <p>Course: <span id="summaryCourse">None</span></p>
+    <p>Date: <span id="summaryDate">None</span></p>
+    <p>Current Hole: <span id="summaryHole">1</span></p>
+    <p>Shots Recorded: <span id="summaryShots">0</span></p>
 </div>
 
 <script src="app.js"></script>
