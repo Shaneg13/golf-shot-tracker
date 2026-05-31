@@ -57,6 +57,9 @@
     <button onclick="showStats()">Show Stats</button>
     <button onclick="exportShots()">Export Data</button>
     <button onclick="clearShots()">Clear Shots</button>
+    <button onclick="saveHole()">
+    Save Hole Score
+</button>
 
 
 </div>
@@ -67,6 +70,11 @@
     <p>Date: <span id="summaryDate">None</span></p>
     <p>Current Hole: <span id="summaryHole">1</span></p>
     <p>Shots Recorded: <span id="summaryShots">0</span></p>
+</div>
+
+<div class="card">
+    <h2>Recent Shots</h2>
+    <div id="shotList"></div>
 </div>
 
 <script src="app.js"></script>

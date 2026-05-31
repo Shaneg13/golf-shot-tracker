@@ -12,6 +12,36 @@ let holes = JSON.parse(
     localStorage.getItem("holes")
 ) || [];
 
+function saveHole() {
+
+    const score =
+        document.getElementById("scoreInput").value;
+
+    if (!score) {
+        alert("Enter a hole score.");
+        return;
+    }
+
+    const holeRecord = {
+        roundId: currentRound.id,
+        hole: currentHole,
+        score: Number(score)
+    };
+
+    holes.push(holeRecord);
+
+    localStorage.setItem(
+        "holes",
+        JSON.stringify(holes)
+    );
+
+    alert(
+        "Hole " +
+        currentHole +
+        " score saved."
+    );
+}
+
 function saveRound() {
 
     const course =
@@ -24,6 +54,7 @@ function saveRound() {
         alert("Enter course and date.");
         return;
     }
+
 
     currentRound = {
         id: Date.now(),
@@ -104,7 +135,7 @@ const shotNumber =
     updateSummary();
 }
 
-    function updateSummary() {
+function updateSummary() {
 
     document.getElementById("summaryHole").textContent =
         currentHole;
