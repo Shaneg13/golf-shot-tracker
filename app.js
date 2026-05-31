@@ -1,12 +1,17 @@
+let currentHole = 1;
 let shots = JSON.parse(localStorage.getItem("shots")) || [];
 
-function addShot() {
-    const hole = prompt("Hole number?");
-    const club = prompt("Club?");
-    const distance = prompt("Distance in yards?");
+function saveShot() {
+    const club = document.getElementById("clubInput").value;
+    const distance = document.getElementById("distanceInput").value;
+
+    if (!club || !distance) {
+        alert("Enter club and distance.");
+        return;
+    }
 
     const shot = {
-        hole: hole,
+        hole: currentHole,
         shotNumber: shots.length + 1,
         club: club,
         distance: distance,
@@ -16,15 +21,27 @@ function addShot() {
     shots.push(shot);
     localStorage.setItem("shots", JSON.stringify(shots));
 
-    alert("Shot saved: " + club + " - " + distance + " yards");
+    document.getElementById("clubInput").value = "";
+    document.getElementById("distanceInput").value = "";
+
+    renderShots();
 }
 
-function viewShots() {
-    let output = "Saved Shots:\n\n";
+function nextHole() {
+    currentHole++;
+    document.getElementById("currentHole").textContent = currentHole;
+}
 
-    shots.forEach(function(shot) {
-        output += "Hole " + shot.hole + " | Shot " + shot.shotNumber + " | " + shot.club + " | " + shot.distance + " yds\n";
+function renderShots() {
+    const shotList = document.getElementById("shotList");
+    shotList.innerHTML = "";
+
+    shots.slice(-10).reverse().forEach(function(shot) {
+        const item = document.createElement("div");
+        item.className = "shot-item";
+        item.textContent = "Hole " + shot.hole + " | " + shot.club + " | " + shot.distance + " yds";
+        shotList.appendChild(item);
     });
-
-    alert(output);
 }
+
+renderShots();
