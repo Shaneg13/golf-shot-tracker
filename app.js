@@ -262,6 +262,39 @@ function exportShots() {
     URL.revokeObjectURL(url);
 }
 
+function showRoundSetup() {
+
+    document.getElementById("roundSetupCard").style.display =
+        "block";
+
+    document.getElementById("shotTrackerCard").style.display =
+        "none";
+
+    document.getElementById("summaryCard").style.display =
+        "none";
+
+    document.getElementById("recentShotsCard").style.display =
+        "none";
+}
+
+function continueRound() {
+
+    document.getElementById("roundSetupCard").style.display =
+        "none";
+
+    document.getElementById("shotTrackerCard").style.display =
+        "block";
+
+    document.getElementById("summaryCard").style.display =
+        "block";
+
+    document.getElementById("recentShotsCard").style.display =
+        "block";
+
+    renderShots();
+    updateSummary();
+}
+
 function showStats() {
 
     if (shots.length === 0) {
@@ -307,3 +340,15 @@ function showStats() {
 
     alert(output);
 }
+
+document.getElementById("roundSetupCard").style.display =
+    "none";
+
+document.getElementById("shotTrackerCard").style.display =
+    "none";
+
+document.getElementById("summaryCard").style.display =
+    "none";
+
+document.getElementById("recentShotsCard").style.display =
+    "none";

@@ -7,8 +7,20 @@
 <body>
 
 <h1>Golf Shot Tracker</h1>
+<div class="card" id="homeCard">
 
-<div class="card">
+    <h2>Home</h2>
+
+    <button onclick="showRoundSetup()">
+        Start Round
+    </button>
+
+    <button onclick="continueRound()">
+        Continue Round
+    </button>
+
+</div>
+<div class="card" id="roundSetupCard">
     <h2>Round Setup</h2>
 
     <label>Course</label>
@@ -20,11 +32,11 @@
     <button onclick="saveRound()">Save Round</button>
 </div>
 
-<div class="card">
+<div class="card" id="shotTrackerCard">
     <h2 id="roundTitle">No Round Started</h2>
     <h3>Current Hole: <span id="currentHole">1</span></h3>
 
-<label>Club</label>
+    <label>Club</label>
 <select id="clubInput">
     <option value="Driver" data-loft="9°">Driver - 9°</option>
     <option value="3 Wood" data-loft="15°">3 Wood - 15°</option>
@@ -80,7 +92,7 @@
 
 </div>
 
-<div class="card">
+<div class="card" id="summaryCard">
     <h2>Round Summary</h2>
     <p>Course: <span id="summaryCourse">None</span></p>
     <p>Date: <span id="summaryDate">None</span></p>
@@ -88,7 +100,7 @@
     <p>Shots Recorded: <span id="summaryShots">0</span></p>
 </div>
 
-<div class="card">
+<div class="card" id="recentShotsCard">
     <h2>Recent Shots</h2>
     <div id="shotList"></div>
 </div>
