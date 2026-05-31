@@ -365,6 +365,27 @@ function renderShots() {
         });
 }
 
+function goHome() {
+
+    document.getElementById("homeCard").style.display =
+        "block";
+
+    document.getElementById("roundSetupCard").style.display =
+        "none";
+
+    document.getElementById("shotTrackerCard").style.display =
+        "none";
+
+    document.getElementById("summaryCard").style.display =
+        "none";
+
+    document.getElementById("scorecardCard").style.display =
+        "none";
+
+    document.getElementById("recentShotsCard").style.display =
+        "none";
+}
+
 if (currentRound) {
 
     document.getElementById("roundTitle").textContent =
@@ -441,6 +462,14 @@ function showRoundSetup() {
 
 function continueRound() {
 
+    if (!currentRound) {
+        alert("No existing round found. Start a new round first.");
+        return;
+    }
+
+    document.getElementById("homeCard").style.display =
+        "none";
+
     document.getElementById("roundSetupCard").style.display =
         "none";
 
@@ -455,9 +484,6 @@ function continueRound() {
     
     document.getElementById("scorecardCard").style.display =
         "block";
-
-    document.getElementById("homeCard").style.display =
-        "none";
 
     updateHoleDisplay();
     renderShots();

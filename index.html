@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Golf Shot Tracker</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 <div id="splashScreen">
@@ -35,6 +36,8 @@
     <input id="dateInput" type="date">
 
     <button onclick="saveRound()">Save Round</button>
+    <button onclick="continueRound()">Continue Existing Round</button>
+    <button onclick="goHome()">Back Home</button>
 </div>
 
 <div class="card" id="shotTrackerCard">
@@ -43,8 +46,10 @@
 <div class="hole-header">
     <h3>Current Hole: <span id="currentHole">1</span></h3>
 
+    <button onclick="goHome()">Home</button>
     <button onclick="previousHole()">Previous Hole</button>
     <button onclick="nextHole()">Next Hole</button>
+
 </div>
 
     <label>Club</label>
@@ -91,12 +96,16 @@
 <input id="parInput" type="number" placeholder="4">
         <label>Hole Score</label>
         <input id="scoreInput" type="number" placeholder="5">
-    <button onclick="saveShot()">Save Shot</button>
-    <button onclick="showStats()">Show Stats</button>
-    <button onclick="exportShots()">Export Data</button>
-    <button onclick="clearShots()">Clear Shots</button>
-    <button onclick="saveHole()">
-    Save Hole Score
+<button onclick="saveShot()">Save Shot</button>
+<button onclick="saveHole()">Save Hole Score</button>
+
+<button onclick="previousHole()">Previous Hole</button>
+<button onclick="nextHole()">Next Hole</button>
+
+<button onclick="showStats()">Show Stats</button>
+<button onclick="exportShots()">Export Data</button>
+<button onclick="clearShots()">Clear Shots</button>
+<button onclick="goHome()">Home</button>
 </button>
 
 
@@ -126,6 +135,6 @@
     <div id="shotList"></div>
 </div>
 
-<script src="app.js"></script>
+<script src="app.js?v=4"></script>
 </body>
 </html>

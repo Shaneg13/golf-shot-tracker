@@ -115,22 +115,86 @@ button:active {
 }
 
 @media (max-width: 600px) {
+
     body {
-        padding: 12px;
+        padding: 0;
+        margin: 0;
+        background: #f3f5f2;
+    }
+
+    h1 {
+        font-size: 26px;
+        margin: 0;
+        padding: 18px 12px;
+        background: #123524;
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 100;
     }
 
     .card {
-        padding: 14px;
-        margin: 12px auto;
+        max-width: none;
+        width: 100%;
+        min-height: calc(100vh - 70px);
+        margin: 0;
+        padding: 18px;
+        border-radius: 0;
+        box-shadow: none;
+        border-bottom: 1px solid #d1d5db;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    label {
+        font-size: 16px;
+        margin-top: 16px;
+    }
+
+    input,
+    select {
+        font-size: 18px;
+        padding: 15px;
+        border-radius: 12px;
     }
 
     button {
         width: 100%;
         margin-right: 0;
+        margin-top: 12px;
+        padding: 16px;
+        font-size: 17px;
+        border-radius: 14px;
     }
 
-    h1 {
-        font-size: 28px;
+    .hole-header {
+        padding: 16px;
+        border-radius: 14px;
+        margin-bottom: 18px;
+    }
+
+    .shot-item,
+    .scorecard-item {
+        font-size: 16px;
+        padding: 14px;
+        margin: 10px 0;
+        border-radius: 12px;
+    }
+
+    #shotTrackerCard {
+        padding-bottom: 40px;
+    }
+
+    #homeCard button {
+        font-size: 18px;
+        padding: 18px;
     }
 }
 
