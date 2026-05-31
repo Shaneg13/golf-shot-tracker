@@ -130,7 +130,7 @@ item.textContent =
     " yds | " +
     shot.result +
     " | " +
-    shot.lie;(
+    shot.lie;
 
             shotList.appendChild(item);
 
