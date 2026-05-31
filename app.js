@@ -125,3 +125,89 @@ if (currentRound) {
 }
 
 renderShots();
+
+function clearShots() {
+
+    if (!confirm("Delete all shots?")) {
+        return;
+    }
+
+    shots = [];
+
+    localStorage.setItem(
+        "shots",
+        JSON.stringify(shots)
+    );
+
+    renderShots();
+}
+
+function exportShots() {
+
+    const data =
+        JSON.stringify(shots, null, 2);
+
+    const blob =
+        new Blob([data], {
+            type: "application/json"
+        });
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+    a.download = "golf-shots.json";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function showStats() {
+
+    if (shots.length === 0) {
+        alert("No shots recorded.");
+        return;
+    }
+
+    const clubs = {};
+
+    shots.forEach(function(shot) {
+
+        if (!clubs[shot.club]) {
+
+            clubs[shot.club] = {
+                total: 0,
+                count: 0
+            };
+
+        }
+
+        clubs[shot.club].total += shot.distance;
+        clubs[shot.club].count++;
+
+    });
+
+    let output = "Club Averages\n\n";
+
+    Object.keys(clubs).forEach(function(club) {
+
+        const avg =
+            Math.round(
+                clubs[club].total /
+                clubs[club].count
+            );
+
+        output +=
+            club +
+            ": " +
+            avg +
+            " yds\n";
+
+    });
+
+    alert(output);
+}
