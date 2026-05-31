@@ -55,6 +55,15 @@ function saveShot() {
     const lie =
         document.getElementById("lieInput").value;
 
+const holeShots =
+    shots.filter(
+        s => s.hole === currentHole &&
+        s.roundId === currentRound.id
+    );
+
+const shotNumber =
+    holeShots.length + 1;
+
     if (!club || !distance) {
         alert("Enter club and distance.");
         return;
@@ -69,6 +78,7 @@ function saveShot() {
     distance: Number(distance),
     result: result,
     lie: lie,
+    shotNumber: shotNumber,
     timestamp: new Date().toISOString()
 };
 
