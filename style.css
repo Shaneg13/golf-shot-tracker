@@ -156,11 +156,17 @@ button:active {
     margin-bottom: 4px;
 }
 
+.app-header {
+    background: #000000;
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--border-soft);
+}
+
 .app-header-logo {
     display: block;
     width: 100%;
     max-width: 360px;
-    margin: 0 auto 18px auto;
+    margin: 0 auto;
     object-fit: contain;
 }
 
