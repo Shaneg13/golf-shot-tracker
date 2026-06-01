@@ -2,36 +2,70 @@
     box-sizing: border-box;
 }
 
+:root {
+    --bg-main: #0B0F0C;
+    --bg-card: #141A16;
+    --bg-card-soft: #1A211C;
+    --bg-input: #0F1511;
+
+    --text-main: #F2F5F1;
+    --text-soft: #D7DED5;
+    --text-muted: #A8B3A8;
+
+    --accent-green: #7CFF8A;
+    --accent-green-soft: #6EEB83;
+    --accent-green-muted: #4FAF5E;
+    --accent-green-glow: rgba(124, 255, 138, 0.18);
+
+    --border-soft: #2B352D;
+    --border-strong: #3C4A3F;
+
+    --button-bg: #1F7A3A;
+    --button-bg-hover: #249447;
+    --button-text: #FFFFFF;
+
+    --warning: #FFD166;
+    --danger: #FF6B6B;
+
+    --shadow-card: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
 body {
     margin: 0;
     padding: 20px;
     font-family: Arial, sans-serif;
-    background: #f3f5f2;
-    color: #1f2933;
+    background: var(--bg-main);
+    color: var(--text-main);
 }
 
 h1 {
     text-align: center;
     margin-bottom: 20px;
-    color: #123524;
+    color: var(--accent-green);
+    text-shadow: 0 0 6px var(--accent-green-glow);
 }
 
 h2 {
     margin-top: 0;
-    color: #123524;
+    color: var(--accent-green);
+    text-shadow: 0 0 6px var(--accent-green-glow);
 }
 
 h3 {
     margin-bottom: 10px;
+    color: var(--accent-green);
+    text-shadow: 0 0 6px var(--accent-green-glow);
 }
 
 .card {
-    background: white;
+    background: var(--bg-card);
     max-width: 700px;
     margin: 16px auto;
     padding: 18px;
     border-radius: 14px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border-soft);
+    color: var(--text-main);
 }
 
 label {
@@ -39,34 +73,41 @@ label {
     margin-top: 14px;
     margin-bottom: 6px;
     font-weight: bold;
-    color: #334155;
+    color: var(--text-soft);
 }
 
 input,
-select {
+select,
+textarea {
     width: 100%;
     padding: 12px;
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--border-strong);
     border-radius: 10px;
     font-size: 16px;
-    background: #ffffff;
+    background: var(--bg-input);
+    color: var(--text-main);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-muted);
 }
 
 button {
     margin-top: 14px;
     margin-right: 8px;
     padding: 12px 16px;
-    border: none;
+    border: 1px solid var(--accent-green-muted);
     border-radius: 10px;
-    background: #166534;
-    color: white;
+    background: var(--button-bg);
+    color: var(--button-text);
     font-size: 15px;
     font-weight: bold;
     cursor: pointer;
 }
 
 button:hover {
-    background: #14532d;
+    background: var(--button-bg-hover);
 }
 
 button:active {
@@ -74,8 +115,8 @@ button:active {
 }
 
 .hole-header {
-    background: #ecfdf3;
-    border: 1px solid #bbf7d0;
+    background: var(--bg-card-soft);
+    border: 1px solid var(--border-soft);
     padding: 14px;
     border-radius: 12px;
     margin-bottom: 16px;
@@ -90,14 +131,15 @@ button:active {
     padding: 10px;
     margin: 8px 0;
     border-radius: 10px;
-    background: #f8fafc;
-    border-left: 5px solid #166534;
+    background: var(--bg-card-soft);
+    border-left: 5px solid var(--accent-green-muted);
     font-size: 15px;
+    color: var(--text-main);
 }
 
 #roundStatus {
     font-weight: bold;
-    color: #166534;
+    color: var(--accent-green);
 }
 
 #totalPar,
@@ -119,18 +161,21 @@ button:active {
     body {
         padding: 0;
         margin: 0;
-        background: #f3f5f2;
+        background: var(--bg-main);
+        color: var(--text-main);
     }
 
     h1 {
         font-size: 26px;
         margin: 0;
         padding: 18px 12px;
-        background: #123524;
-        color: white;
+        background: #08100B;
+        color: var(--accent-green);
+        text-shadow: 0 0 6px var(--accent-green-glow);
         position: sticky;
         top: 0;
         z-index: 100;
+        border-bottom: 1px solid var(--border-soft);
     }
 
     .card {
@@ -141,7 +186,9 @@ button:active {
         padding: 18px;
         border-radius: 0;
         box-shadow: none;
-        border-bottom: 1px solid #d1d5db;
+        border: none;
+        border-bottom: 1px solid var(--border-soft);
+        background: var(--bg-card);
     }
 
     h2 {
@@ -156,13 +203,18 @@ button:active {
     label {
         font-size: 16px;
         margin-top: 16px;
+        color: var(--text-soft);
     }
 
     input,
-    select {
+    select,
+    textarea {
         font-size: 18px;
         padding: 15px;
         border-radius: 12px;
+        background: var(--bg-input);
+        color: var(--text-main);
+        border: 1px solid var(--border-strong);
     }
 
     button {
