@@ -179,18 +179,16 @@ button:active {
         color: var(--text-main);
     }
 
-    h1 {
-        font-size: 26px;
-        margin: 0;
-        padding: 18px 12px;
-        background: #08100B;
-        color: var(--accent-green);
-        text-shadow: 0 0 6px var(--accent-green-glow);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        border-bottom: 1px solid var(--border-soft);
-    }
+    .app-header {
+    padding: 10px 8px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.app-header-logo {
+    max-width: 320px;
+}
 
     .card {
         max-width: none;
