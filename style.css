@@ -68,6 +68,38 @@ h3 {
     color: var(--text-main);
 }
 
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 12px;
+}
+
+.home-tile {
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 14px;
+    min-height: 84px;
+}
+
+.home-tile.primary {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #5FAF45, #7CFF8A);
+    color: #061008;
+}
+
+.home-tile h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+}
+
+.home-tile p {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.75;
+}
+
 label {
     display: block;
     margin-top: 14px;
