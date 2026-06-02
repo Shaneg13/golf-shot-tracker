@@ -86,18 +86,18 @@ h3 {
 .home-tile.primary {
     grid-column: span 2;
     background: linear-gradient(135deg, #5FAF45, #7CFF8A);
-    color: #061008;
+    color: #061008 !important;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.home-tile h3 {
-    margin: 0 0 6px;
-    font-size: 15px;
-}
-
-.home-tile p {
-    margin: 0;
-    font-size: 12px;
-    opacity: 0.75;
+.home-tile.primary h3,
+.home-tile.primary p {
+    color: #061008 !important;
 }
 
 label {
