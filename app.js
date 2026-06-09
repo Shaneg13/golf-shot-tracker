@@ -593,6 +593,7 @@ const round = {
     courseId: selectedCourseId,
     courseName: courses[selectedCourseId].name,
     holesPlayed: simpleScorecard.length,
+    hciUsed: playerProfile.hci,
     holes: simpleScorecard,
     totalScore: simpleScorecard
         .filter(hole => hole.score !== null)
@@ -747,8 +748,11 @@ function renderRoundDetail(roundId) {
         return;
     }
 
+const hciText =
+    round.hciUsed !== undefined ? " • HCI " + round.hciUsed.toFixed(1) : "";
+
 document.getElementById("roundDetailDate").textContent =
-    (round.courseName || "Whitinsville Golf Club") + " • " + round.date;
+    (round.courseName || "Whitinsville Golf Club") + " • " + round.date + hciText;
 
     const roundDetailList =
         document.getElementById("roundDetailList");
@@ -767,8 +771,11 @@ round.holes.forEach(function(hole) {
     const scoreDisplay =
         hole.score === null ? "-" : hole.score;
 
-    const strokeDots =
-        getStrokeDots(hole.handicap, playerProfile.hci);
+const hciForRound =
+    round.hciUsed !== undefined ? round.hciUsed : playerProfile.hci;
+
+const strokeDots =
+    getStrokeDots(hole.handicap, hciForRound);
 
     const difference =
         hole.score === null ? null : hole.score - hole.par;
@@ -851,18 +858,18 @@ function startScorecardRound(numberOfHoles) {
     showScorecardScreen();
 }
 
-function getStrokeDots(holeHandicap, playerHandicap) {
-    if (!holeHandicap || !playerHandicap) {
+function getStrokeDots(holeHandicap, handicapIndex) {
+    if (!holeHandicap || !handicapIndex) {
         return "";
     }
 
     let strokes = 0;
 
-    if (playerHandicap >= holeHandicap) {
+    if (handicapIndex >= holeHandicap) {
         strokes = 1;
     }
 
-    if (playerHandicap > 18 && (playerHandicap - 18) >= holeHandicap) {
+    if (handicapIndex > 18 && (handicapIndex - 18) >= holeHandicap) {
         strokes = 2;
     }
 
@@ -885,6 +892,7 @@ function loadPlayerProfile() {
             playerProfile = JSON.parse(savedProfile);
         } catch (error) {
             console.error("Could not load player profile:", error);
+
             playerProfile = {
                 hci: 26.4
             };
@@ -922,10 +930,14 @@ function updateHci() {
         return;
     }
 
-    playerProfile.hci = newHci;
+playerProfile.hci = newHci;
 
-    savePlayerProfile();
-    updateHciDisplay();
+savePlayerProfile();
+updateHciDisplay();
+
+if (simpleScorecard.length > 0) {
+    renderSimpleScorecard();
+}
 }
 
 loadPlayerProfile();
