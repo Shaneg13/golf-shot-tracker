@@ -12,6 +12,10 @@ let holes = JSON.parse(
     localStorage.getItem("holes")
 ) || [];
 
+let playerProfile = {
+    hci: 26.4
+};
+
 const courses = {
     whitinsville: {
         id: "whitinsville",
@@ -458,16 +462,17 @@ return {
 };
             });
 
-        const backNine =
-            course.blueBlackTees.map(function(hole) {
-                return {
-                    hole: hole.hole + 9,
-                    par: hole.par,
-                    yards: hole.yards,
-                    tee: hole.tee,
-                    score: null
-                };
-            });
+const backNine =
+    course.blueTees.map(function(hole) {
+        return {
+            hole: hole.hole,
+            par: hole.par,
+            yards: hole.yards,
+            tee: hole.tee,
+            handicap: hole.handicap,
+            score: null
+        };
+    });
 
         simpleScorecard =
             frontNine.concat(backNine);
@@ -485,7 +490,6 @@ function getDefaultPar(holeNumber) {
     return defaultPars[holeNumber - 1];
 }
 
-
 function showScorecardScreen() {
     hideAllScreens();
 
@@ -502,12 +506,15 @@ function renderSimpleScorecard() {
         const holeDiv = document.createElement("div");
         holeDiv.className = "scorecard-hole";
 
+        const strokeDots =
+            getStrokeDots(hole.handicap, playerProfile.hci);
+
         holeDiv.innerHTML = `
             <div class="hole-number">${hole.hole}</div>
 
             <div class="hole-details">
                 <strong>Hole ${hole.hole}</strong>
-  <span>Par ${hole.par} • ${hole.yards || "-"} yds • HCP ${hole.handicap} • ${hole.tee}</span>
+<span>Par ${hole.par} • ${hole.yards || "-"} yds • HCP ${hole.handicap} ${strokeDots} | ${hole.tee || ""}</span>
             </div>
 
             <div class="score-controls">
@@ -756,12 +763,15 @@ document.getElementById("roundDetailDate").textContent =
     let totalScore = 0;
     let totalPar = 0;
 
-    round.holes.forEach(function(hole) {
-        const scoreDisplay =
-            hole.score === null ? "-" : hole.score;
+round.holes.forEach(function(hole) {
+    const scoreDisplay =
+        hole.score === null ? "-" : hole.score;
 
-        const difference =
-            hole.score === null ? null : hole.score - hole.par;
+    const strokeDots =
+        getStrokeDots(hole.handicap, playerProfile.hci);
+
+    const difference =
+        hole.score === null ? null : hole.score - hole.par;
 
         let status = "-";
 
@@ -792,7 +802,7 @@ document.getElementById("roundDetailDate").textContent =
 
             <div class="hole-details">
                 <strong>Hole ${hole.hole}</strong>
-<span>Par ${hole.par} • ${hole.yards || "-"} yds • HCP ${hole.handicap} • ${hole.tee || ""}</span>
+<span>Par ${hole.par} • ${hole.yards || "-"} yds • HCP ${hole.handicap} ${strokeDots} | ${hole.tee || ""}</span>
             </div>
 
             <div class="round-detail-score">
@@ -841,6 +851,84 @@ function startScorecardRound(numberOfHoles) {
     showScorecardScreen();
 }
 
+function getStrokeDots(holeHandicap, playerHandicap) {
+    if (!holeHandicap || !playerHandicap) {
+        return "";
+    }
+
+    let strokes = 0;
+
+    if (playerHandicap >= holeHandicap) {
+        strokes = 1;
+    }
+
+    if (playerHandicap > 18 && (playerHandicap - 18) >= holeHandicap) {
+        strokes = 2;
+    }
+
+    if (strokes === 1) {
+        return "•";
+    }
+
+    if (strokes === 2) {
+        return "••";
+    }
+
+    return "";
+}
+
+function loadPlayerProfile() {
+    const savedProfile = localStorage.getItem("gstPlayerProfile");
+
+    if (savedProfile) {
+        try {
+            playerProfile = JSON.parse(savedProfile);
+        } catch (error) {
+            console.error("Could not load player profile:", error);
+            playerProfile = {
+                hci: 26.4
+            };
+        }
+    }
+
+    updateHciDisplay();
+}
+
+function savePlayerProfile() {
+    localStorage.setItem("gstPlayerProfile", JSON.stringify(playerProfile));
+}
+
+function updateHciDisplay() {
+    const hciDisplay = document.getElementById("hciDisplay");
+
+    if (!hciDisplay) return;
+
+    hciDisplay.textContent = playerProfile.hci !== null
+        ? playerProfile.hci.toFixed(1)
+        : "--";
+}
+
+function updateHci() {
+    const currentValue = playerProfile.hci !== null ? playerProfile.hci : "";
+
+    const input = prompt("Enter your current Handicap Index:", currentValue);
+
+    if (input === null) return;
+
+    const newHci = parseFloat(input);
+
+    if (isNaN(newHci)) {
+        alert("Please enter a valid Handicap Index.");
+        return;
+    }
+
+    playerProfile.hci = newHci;
+
+    savePlayerProfile();
+    updateHciDisplay();
+}
+
+loadPlayerProfile();
 renderShots();
 updateSummary();
 
