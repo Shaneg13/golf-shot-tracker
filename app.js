@@ -18,29 +18,29 @@ const courses = {
         name: "Whitinsville Golf Club",
         defaultCourse: true,
 
-        whiteTees: [
-            { hole: 1, par: 5, yards: 0, tee: "White" },
-            { hole: 2, par: 3, yards: 0, tee: "White" },
-            { hole: 3, par: 4, yards: 0, tee: "White" },
-            { hole: 4, par: 4, yards: 0, tee: "White" },
-            { hole: 5, par: 4, yards: 0, tee: "White" },
-            { hole: 6, par: 4, yards: 0, tee: "White" },
-            { hole: 7, par: 3, yards: 0, tee: "White" },
-            { hole: 8, par: 4, yards: 0, tee: "White" },
-            { hole: 9, par: 4, yards: 0, tee: "White" }
-        ],
+whiteTees: [
+    { hole: 1, par: 5, yards: 501, tee: "White/Blue", handicap: 8 },
+    { hole: 2, par: 3, yards: 140, tee: "White/Blue", handicap: 16 },
+    { hole: 3, par: 4, yards: 342, tee: "White/Blue", handicap: 10 },
+    { hole: 4, par: 4, yards: 350, tee: "White/Blue", handicap: 14 },
+    { hole: 5, par: 4, yards: 404, tee: "White/Blue", handicap: 6 },
+    { hole: 6, par: 4, yards: 380, tee: "White/Blue", handicap: 4 },
+    { hole: 7, par: 3, yards: 159, tee: "White/Blue", handicap: 18 },
+    { hole: 8, par: 4, yards: 318, tee: "White/Blue", handicap: 12 },
+    { hole: 9, par: 4, yards: 418, tee: "White/Blue", handicap: 2 }
+],
 
-        blueBlackTees: [
-            { hole: 1, par: 5, yards: 578, tee: "Blue/Black" },
-            { hole: 2, par: 3, yards: 147, tee: "Blue/Black" },
-            { hole: 3, par: 4, yards: 372, tee: "Blue/Black" },
-            { hole: 4, par: 4, yards: 358, tee: "Blue/Black" },
-            { hole: 5, par: 4, yards: 421, tee: "Blue/Black" },
-            { hole: 6, par: 4, yards: 385, tee: "Blue/Black" },
-            { hole: 7, par: 3, yards: 172, tee: "Blue/Black" },
-            { hole: 8, par: 4, yards: 327, tee: "Blue/Black" },
-            { hole: 9, par: 4, yards: 446, tee: "Blue/Black" }
-        ]
+blueTees: [
+    { hole: 10, par: 5, yards: 550, tee: "White/Blue", handicap: 7 },
+    { hole: 11, par: 3, yards: 147, tee: "White/Blue", handicap: 15 },
+    { hole: 12, par: 4, yards: 359, tee: "White/Blue", handicap: 9 },
+    { hole: 13, par: 4, yards: 367, tee: "White/Blue", handicap: 13 },
+    { hole: 14, par: 4, yards: 425, tee: "White/Blue", handicap: 5 },
+    { hole: 15, par: 4, yards: 393, tee: "White/Blue", handicap: 3 },
+    { hole: 16, par: 3, yards: 175, tee: "White/Blue", handicap: 17 },
+    { hole: 17, par: 4, yards: 330, tee: "White/Blue", handicap: 11 },
+    { hole: 18, par: 4, yards: 434, tee: "White/Blue", handicap: 1 }
+]
     }
 };
 
@@ -434,26 +434,28 @@ function initializeScorecard(numberOfHoles) {
     if (numberOfHoles === 9) {
         simpleScorecard =
             course.whiteTees.map(function(hole) {
-                return {
-                    hole: hole.hole,
-                    par: hole.par,
-                    yards: hole.yards,
-                    tee: hole.tee,
-                    score: null
-                };
+return {
+    hole: hole.hole,
+    par: hole.par,
+    yards: hole.yards,
+    tee: hole.tee,
+    handicap: hole.handicap,
+    score: null
+};
             });
     }
 
     if (numberOfHoles === 18) {
         const frontNine =
             course.whiteTees.map(function(hole) {
-                return {
-                    hole: hole.hole,
-                    par: hole.par,
-                    yards: hole.yards,
-                    tee: hole.tee,
-                    score: null
-                };
+return {
+    hole: hole.hole,
+    par: hole.par,
+    yards: hole.yards,
+    tee: hole.tee,
+    handicap: hole.handicap,
+    score: null
+};
             });
 
         const backNine =
@@ -505,7 +507,7 @@ function renderSimpleScorecard() {
 
             <div class="hole-details">
                 <strong>Hole ${hole.hole}</strong>
-                <span>Par ${hole.par} • ${hole.yards || "-"} yds • ${hole.tee}</span>
+  <span>Par ${hole.par} • ${hole.yards || "-"} yds • HCP ${hole.handicap} • ${hole.tee}</span>
             </div>
 
             <div class="score-controls">
@@ -790,7 +792,7 @@ document.getElementById("roundDetailDate").textContent =
 
             <div class="hole-details">
                 <strong>Hole ${hole.hole}</strong>
-                    <span>Par ${hole.par} • ${hole.yards || "-"} yds • ${hole.tee || ""}</span>
+<span>Par ${hole.par} • ${hole.yards || "-"} yds • HCP ${hole.handicap} • ${hole.tee || ""}</span>
             </div>
 
             <div class="round-detail-score">
@@ -988,7 +990,6 @@ function showRoundModePopup() {
 function closeRoundModePopup() {
     document.getElementById("roundModePopup").classList.add("hidden");
 }
-
 
 function startShotTrackingMode() {
     closeRoundModePopup();
