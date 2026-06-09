@@ -202,6 +202,266 @@ button:active {
     object-fit: contain;
 }
 
+.hidden {
+    display: none !important;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 18px;
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 380px;
+    background: #0d1510;
+    border: 1px solid rgba(124, 255, 138, 0.18);
+    border-radius: 22px;
+    padding: 20px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+}
+
+.round-mode-modal h2 {
+    margin: 0 0 6px;
+    color: #7CFF8A;
+    text-align: center;
+}
+
+.modal-subtitle {
+    margin: 0 0 18px;
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.75;
+}
+
+.mode-option {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+    color: white;
+    text-align: left;
+}
+
+.mode-option strong {
+    display: block;
+    font-size: 17px;
+    margin-bottom: 4px;
+    color: white;
+}
+
+.mode-option span {
+    display: block;
+    font-size: 13px;
+    opacity: 0.72;
+}
+
+.mode-option:active {
+    transform: scale(0.98);
+}
+
+.secondary-button {
+    width: 100%;
+    margin-top: 4px;
+    padding: 12px;
+    border-radius: 14px;
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+}
+
+.scorecard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.scorecard-hole {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 10px;
+
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 10px;
+}
+
+.hole-number {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(124, 255, 138, 0.12);
+    color: #7CFF8A;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+}
+
+.hole-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.hole-details strong {
+    font-size: 15px;
+}
+
+.hole-details span {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.score-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.score-controls button {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.10);
+    color: white;
+}
+
+.score-value {
+    min-width: 28px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.scorecard-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+}
+
+.scorecard-summary div {
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 14px;
+    text-align: center;
+}
+
+.scorecard-summary span {
+    display: block;
+    font-size: 12px;
+    opacity: 0.7;
+    margin-bottom: 5px;
+}
+
+.scorecard-summary strong {
+    font-size: 22px;
+    color: #7CFF8A;
+}
+
+.recent-rounds-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.recent-round-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 14px;
+}
+
+.recent-round-card div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.recent-round-card strong {
+    font-size: 15px;
+}
+
+.recent-round-card span {
+    font-size: 12px;
+    opacity: 0.72;
+}
+
+.recent-round-score {
+    text-align: right;
+    align-items: flex-end;
+}
+
+.recent-round-score strong {
+    font-size: 22px;
+    color: #7CFF8A;
+}
+
+.empty-message {
+    opacity: 0.72;
+    text-align: center;
+    padding: 20px;
+}
+
+.round-detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.round-detail-hole {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 10px;
+
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 10px;
+}
+
+.round-detail-score {
+    text-align: right;
+}
+
+.round-detail-score strong {
+    display: block;
+    font-size: 20px;
+    color: #7CFF8A;
+}
+
+.round-detail-score span {
+    display: block;
+    font-size: 12px;
+    opacity: 0.72;
+}
+
+
 @media (max-width: 600px) {
 
     body {

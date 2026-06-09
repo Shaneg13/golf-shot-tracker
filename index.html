@@ -14,39 +14,37 @@
 <div class="app-header">
 <h1><img src="gstbanner.png" alt="GST" class="app-header-logo"></h1>
 </div>
+
 <div class="card" id="homeCard">
 
     <h2>Home</h2>
-<div class="card" id="homeCard">
 
     <div class="home-grid">
 
-        <div class="home-tile primary" onclick="showRoundSetup()">
-            <h3>Start Round</h3>
-            <p>Begin a new golf round</p>
-        </div>
+<div class="home-tile primary" onclick="showRoundModePopup()">
+    <h3>Start Round</h3>
+    <p>Begin a new golf round</p>
+</div>
 
         <div class="home-tile" onclick="continueRound()">
             <h3>Continue</h3>
             <p>Resume active round</p>
         </div>
 
-        <div class="home-tile">
-            <h3>Stats</h3>
-            <p>Club averages and trends</p>
-        </div>
+<div class="home-tile" onclick="showStats()">
+    <h3>Stats</h3>
+    <p>Club averages and trends</p>
+</div>
 
-        <div class="home-tile">
+        <div class="home-tile" onclick="showRecentRounds()">
             <h3>Recent Rounds</h3>
-            <p>View last rounds played</p>
+            <p>View saved rounds</p>
         </div>
 
         <div class="home-tile">
             <h3>Courses</h3>
             <p>Manage course info</p>
         </div>
-
-    </div>
 
 </div>
 
@@ -67,6 +65,7 @@
 
 <div class="card" id="shotTrackerCard">
 <h2 id="roundTitle">No Round Started</h2>
+
 
 <div class="hole-header">
     <h3>Current Hole: <span id="currentHole">1</span></h3>
@@ -128,9 +127,6 @@
 <button onclick="exportShots()">Export Data</button>
 <button onclick="clearShots()">Clear Shots</button>
 
-</button>
-
-
 </div>
 
 <div class="card" id="summaryCard">
@@ -157,6 +153,124 @@
     <div id="shotList"></div>
 </div>
 
+<div id="scorecardScreen" class="card hidden">
+
+    <h2>Scorecard</h2>
+    <p class="section-subtitle">Track score by hole</p>
+
+    <div id="scorecardGrid" class="scorecard-grid"></div>
+
+    <div class="scorecard-summary">
+        <div>
+            <span>Total Score</span>
+            <strong id="scorecardTotalScore">0</strong>
+        </div>
+
+        <div>
+            <span>To Par</span>
+            <strong id="scorecardToPar">E</strong>
+        </div>
+    </div>
+
+    <button onclick="saveScorecardRound()" class="primary-button">
+        Save Round
+    </button>
+
+    <button onclick="showHome()" class="secondary-button">
+        Back Home
+    </button>
+
+</div>
+
+<div id="recentRoundsScreen" class="card hidden">
+
+    <h2>Recent Rounds</h2>
+    <p class="section-subtitle">Saved scorecard rounds</p>
+
+    <div id="recentRoundsList" class="recent-rounds-list"></div>
+
+    <button onclick="showHome()" class="secondary-button">
+        Back Home
+    </button>
+
+</div>
+
+<div id="roundDetailScreen" class="card hidden">
+
+    <h2>Round Detail</h2>
+    <p class="section-subtitle" id="roundDetailDate">Saved round</p>
+
+    <div id="roundDetailList" class="round-detail-list"></div>
+
+    <div class="scorecard-summary">
+        <div>
+            <span>Total Score</span>
+            <strong id="roundDetailTotalScore">0</strong>
+        </div>
+
+        <div>
+            <span>To Par</span>
+            <strong id="roundDetailToPar">E</strong>
+        </div>
+    </div>
+
+    <button onclick="showRecentRounds()" class="secondary-button">
+        Back to Recent Rounds
+    </button>
+
+    <button onclick="showHome()" class="secondary-button">
+        Back Home
+    </button>
+
+</div>
+
 <script src="app.js?v=12"></script>
+
+<div id="roundModePopup" class="modal hidden">
+    <div class="modal-content round-mode-modal">
+
+        <h2>Start Round</h2>
+        <p class="modal-subtitle">Choose how you want to track today.</p>
+
+        <button class="mode-option" onclick="startScorecardMode()">
+            <strong>Scorecard</strong>
+            <span>Track score by hole</span>
+        </button>
+
+        <button class="mode-option" onclick="startShotTrackingMode()">
+            <strong>Shot Tracking</strong>
+            <span>Shot by shot tracking</span>
+        </button>
+
+        <button class="secondary-button" onclick="closeRoundModePopup()">
+            Cancel
+        </button>
+
+    </div>
+</div>
+
+<div id="holeCountPopup" class="modal hidden">
+    <div class="modal-content round-mode-modal">
+
+        <h2>Scorecard</h2>
+        <p class="modal-subtitle">Whitinsville Golf Club</p>
+
+        <button class="mode-option" onclick="startScorecardRound(9)">
+            <strong>9 Holes</strong>
+            <span>White tees</span>
+        </button>
+
+        <button class="mode-option" onclick="startScorecardRound(18)">
+            <strong>18 Holes</strong>
+            <span>Front 9 white, back 9 blue/black</span>
+        </button>
+
+        <button class="secondary-button" onclick="closeHoleCountPopup()">
+            Cancel
+        </button>
+
+    </div>
+</div>
+
 </body>
 </html>
