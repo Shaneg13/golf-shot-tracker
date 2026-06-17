@@ -673,7 +673,14 @@ const pastRoundScreen =
 if (pastRoundScreen) {
     pastRoundScreen.classList.add("hidden");
 }
+
+const statsScreen =
+    document.getElementById("statsScreen");
+
+if (statsScreen) {
+    statsScreen.classList.add("hidden");
 }
+    }
 
 function showRecentRounds() {
     hideAllScreens();
@@ -1475,49 +1482,122 @@ function continueRound() {
 }
 
 function showStats() {
+    hideAllScreens();
 
-    if (shots.length === 0) {
-        alert("No shots recorded.");
+    const statsScreen =
+        document.getElementById("statsScreen");
+
+    statsScreen.classList.remove("hidden");
+
+    renderHoleAverageStats();
+}
+
+function renderHoleAverageStats() {
+    const statsList =
+        document.getElementById("holeAverageStatsList");
+
+    statsList.innerHTML = "";
+
+    const savedRounds =
+        JSON.parse(localStorage.getItem("savedScorecardRounds")) || [];
+
+    if (savedRounds.length === 0) {
+        statsList.innerHTML =
+            "<p class='empty-message'>No saved rounds yet.</p>";
         return;
     }
 
-    const clubs = {};
+    const holeStats = {};
 
-    shots.forEach(function(shot) {
-
-        if (!clubs[shot.club]) {
-
-            clubs[shot.club] = {
-                total: 0,
-                count: 0
-            };
-
+    savedRounds.forEach(function(round) {
+        if (!round.holes) {
+            return;
         }
 
-        clubs[shot.club].total += shot.distance;
-        clubs[shot.club].count++;
+        round.holes.forEach(function(hole) {
+            if (hole.score === null || hole.score === undefined) {
+                return;
+            }
 
+            if (!holeStats[hole.hole]) {
+                holeStats[hole.hole] = {
+                    hole: hole.hole,
+                    par: hole.par,
+                    totalScore: 0,
+                    totalToPar: 0,
+                    count: 0
+                };
+            }
+
+            holeStats[hole.hole].totalScore += hole.score;
+            holeStats[hole.hole].totalToPar += hole.score - hole.par;
+            holeStats[hole.hole].count++;
+        });
     });
 
-    let output = "Club Averages\n\n";
+    const sortedHoleStats =
+        Object.values(holeStats).sort(function(a, b) {
+            return a.hole - b.hole;
+        });
 
-    Object.keys(clubs).forEach(function(club) {
+    if (sortedHoleStats.length === 0) {
+        statsList.innerHTML =
+            "<p class='empty-message'>No completed hole scores yet.</p>";
+        return;
+    }
 
-        const avg =
-            Math.round(
-                clubs[club].total /
-                clubs[club].count
-            );
+    sortedHoleStats.forEach(function(stat) {
+        const averageScore =
+            stat.totalScore / stat.count;
 
-        output +=
-            club +
-            ": " +
-            avg +
-            " yds\n";
+        const averageToPar =
+            stat.totalToPar / stat.count;
 
+        let averageToParText = "E";
+
+        if (averageToPar > 0) {
+            averageToParText = "+" + averageToPar.toFixed(1);
+        }
+
+        if (averageToPar < 0) {
+            averageToParText = averageToPar.toFixed(1);
+        }
+
+        let trendLabel = "Solid";
+
+        if (averageToPar >= 1) {
+            trendLabel = "Losing strokes";
+        }
+
+        if (averageToPar <= 0) {
+            trendLabel = "Gaining/holding";
+        }
+
+        const statDiv =
+            document.createElement("div");
+
+        statDiv.className = "hole-average-card";
+
+        statDiv.innerHTML = `
+            <div class="hole-number">${stat.hole}</div>
+
+            <div class="hole-average-main">
+                <strong>Hole ${stat.hole}</strong>
+                <span>Par ${stat.par} • ${stat.count} rounds</span>
+            </div>
+
+            <div class="hole-average-score">
+                <strong>${averageScore.toFixed(1)}</strong>
+                <span>${averageToParText}</span>
+            </div>
+
+            <div class="hole-average-trend">
+                ${trendLabel}
+            </div>
+        `;
+
+        statsList.appendChild(statDiv);
     });
-
-    alert(output);
 }
 
 function showRoundModePopup() {

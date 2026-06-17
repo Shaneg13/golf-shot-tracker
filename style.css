@@ -793,3 +793,82 @@ button:active {
     display: block;
     box-sizing: border-box;
 }
+
+.stats-mode-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+}
+
+.stats-tab {
+    width: 100%;
+    margin: 0;
+}
+
+.active-tab {
+    background: var(--button-bg);
+    color: white;
+}
+
+.disabled-tab {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.45);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.hole-average-stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.hole-average-card {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 10px;
+
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 10px;
+}
+
+.hole-average-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.hole-average-main strong {
+    font-size: 15px;
+}
+
+.hole-average-main span {
+    font-size: 12px;
+    opacity: 0.72;
+}
+
+.hole-average-score {
+    text-align: right;
+}
+
+.hole-average-score strong {
+    display: block;
+    font-size: 20px;
+    color: #7CFF8A;
+}
+
+.hole-average-score span {
+    display: block;
+    font-size: 12px;
+    opacity: 0.72;
+}
+
+.hole-average-trend {
+    grid-column: 2 / 4;
+    font-size: 12px;
+    opacity: 0.75;
+}
