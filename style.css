@@ -464,6 +464,49 @@ button:active {
     opacity: 0.72;
 }
 
+.delete-round-btn {
+    margin-top: 8px;
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 80, 80, 0.4);
+    border-radius: 999px;
+    background: rgba(139, 30, 30, 0.18);
+    color: #ff9a9a;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.round-swipe-wrapper {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+    border-radius: 14px;
+}
+
+.round-delete-action {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 88px;
+    border: none;
+    background: #8b1e1e;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    z-index: 1;
+}
+
+.swipe-front-card {
+    position: relative;
+    z-index: 2;
+    transition: transform 0.2s ease;
+    touch-action: pan-y;
+}
+
+.swipe-front-card.show-delete {
+    transform: translateX(-88px);
+}
+
 
 @media (max-width: 600px) {
 

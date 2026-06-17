@@ -48,6 +48,8 @@ blueTees: [
     }
 };
 
+const SAVED_ROUNDS_KEY = "savedScorecardRounds";
+
 let selectedCourseId =
     localStorage.getItem("selectedCourseId") || "whitinsville";
 
@@ -218,6 +220,23 @@ document.getElementById("roundTitle").textContent =
 updateHoleDisplay();
 updateSummary();
 continueRound();
+}
+
+function deleteRound(roundId) {
+    const confirmed = confirm("Delete this round? This cannot be undone.");
+
+    if (!confirmed) {
+        return;
+    }
+
+    let savedRounds =
+        JSON.parse(localStorage.getItem(SAVED_ROUNDS_KEY)) || [];
+
+    savedRounds = savedRounds.filter(round => round.id !== roundId);
+
+    localStorage.setItem(SAVED_ROUNDS_KEY, JSON.stringify(savedRounds));
+
+    showRecentRounds();
 }
 
 function saveShot() {
@@ -697,14 +716,37 @@ function renderRecentRounds() {
                 toParText = toPar;
             }
 
-            const roundDiv =
-                document.createElement("div");
 
-roundDiv.className = "recent-round-card";
+const swipeWrapper =
+    document.createElement("div");
+
+swipeWrapper.className = "round-swipe-wrapper";
+
+const deleteButton =
+    document.createElement("button");
+
+deleteButton.className = "round-delete-action";
+deleteButton.textContent = "Delete";
+
+deleteButton.onclick = function(event) {
+    event.stopPropagation();
+    deleteRound(round.id);
+};
+
+const roundDiv =
+    document.createElement("div");
+
+roundDiv.className = "recent-round-card swipe-front-card";
 
 roundDiv.onclick = function() {
+    if (roundDiv.classList.contains("show-delete")) {
+        roundDiv.classList.remove("show-delete");
+        return;
+    }
+
     showRoundDetail(round.id);
 };
+
 roundDiv.innerHTML = `
     <div>
         <strong>${round.courseName || "Whitinsville Golf Club"}</strong>
@@ -717,9 +759,14 @@ roundDiv.innerHTML = `
     </div>
 `;
 
-            recentRoundsList.appendChild(roundDiv);
+swipeWrapper.appendChild(deleteButton);
+swipeWrapper.appendChild(roundDiv);
+
+recentRoundsList.appendChild(swipeWrapper);
 
         });
+        
+enableSwipeRevealDelete();
 }
 
 function showRoundDetail(roundId) {
@@ -938,6 +985,51 @@ updateHciDisplay();
 if (simpleScorecard.length > 0) {
     renderSimpleScorecard();
 }
+}
+
+function enableSwipeRevealDelete() {
+    const swipeCards =
+        document.querySelectorAll(".swipe-front-card");
+
+    swipeCards.forEach(function(card) {
+        let startX = 0;
+        let startY = 0;
+
+        card.addEventListener("touchstart", function(event) {
+            startX = event.touches[0].clientX;
+            startY = event.touches[0].clientY;
+        });
+
+        card.addEventListener("touchmove", function(event) {
+            const currentX = event.touches[0].clientX;
+            const currentY = event.touches[0].clientY;
+
+            const diffX = currentX - startX;
+            const diffY = currentY - startY;
+
+            if (Math.abs(diffY) > Math.abs(diffX)) {
+                return;
+            }
+
+            if (diffX < -40) {
+                closeAllSwipeCards();
+                card.classList.add("show-delete");
+            }
+
+            if (diffX > 40) {
+                card.classList.remove("show-delete");
+            }
+        });
+    });
+}
+
+function closeAllSwipeCards() {
+    const openCards =
+        document.querySelectorAll(".swipe-front-card.show-delete");
+
+    openCards.forEach(function(card) {
+        card.classList.remove("show-delete");
+    });
 }
 
 loadPlayerProfile();
