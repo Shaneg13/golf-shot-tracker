@@ -710,3 +710,11 @@ button:active {
 .round-detail-delete-btn:hover {
     background: rgba(139, 30, 30, 0.35);
 }
+
+.round-detail-summary {
+    grid-template-columns: 1fr 1fr;
+}
+
+.net-score-card {
+    grid-column: span 2;
+}

@@ -3,7 +3,7 @@
 <head>
     <title>Golf Shot Tracker</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css?v=12">
+    <link rel="stylesheet" href="style.css?v=13">
 </head>
 <body>
 <div id="splashScreen">
@@ -210,16 +210,21 @@
 
     <div id="roundDetailList" class="round-detail-list"></div>
 
-    <div class="scorecard-summary">
-        <div>
-            <span>Total Score</span>
-            <strong id="roundDetailTotalScore">0</strong>
-        </div>
+<div class="scorecard-summary round-detail-summary">
+    <div>
+        <span>Total Score</span>
+        <strong id="roundDetailTotalScore">0</strong>
+    </div>
 
-        <div>
-            <span>To Par</span>
-            <strong id="roundDetailToPar">E</strong>
-        </div>
+    <div>
+        <span>To Par</span>
+        <strong id="roundDetailToPar">E</strong>
+    </div>
+
+    <div class="net-score-card">
+        <span>Net Score</span>
+        <strong id="roundDetailNetScore">-</strong>
+    </div>
     </div>
 
     <button onclick="showRecentRounds()" class="secondary-button">
@@ -232,7 +237,7 @@
 
 </div>
 
-<script src="app.js?v=12"></script>
+<script src="app.js?v=13"></script>
 
 <div id="roundModePopup" class="modal hidden">
     <div class="modal-content round-mode-modal">

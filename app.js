@@ -881,11 +881,29 @@ const strokeDots =
         toParText = toPar;
     }
 
+    const hciForNet =
+        round.hciUsed !== undefined ? round.hciUsed : playerProfile.hci;
+
+    const netStrokes =
+        completedHoles.reduce(function(sum, hole) {
+            return sum + getStrokesForHole(hole.handicap, hciForNet);
+        }, 0);
+
+    const netScore =
+        completedHoles.length === 0 ? "-" : totalScore - netStrokes;
+
     document.getElementById("roundDetailTotalScore").textContent =
         totalScore;
 
     document.getElementById("roundDetailToPar").textContent =
         toParText;
+
+    const netScoreElement =
+        document.getElementById("roundDetailNetScore");
+
+    if (netScoreElement) {
+        netScoreElement.textContent = netScore;
+    }
 
     const deleteRoundButton =
         document.createElement("button");
@@ -918,8 +936,27 @@ function startScorecardRound(numberOfHoles) {
 }
 
 function getStrokeDots(holeHandicap, handicapIndex) {
+    const strokes =
+        getStrokesForHole(holeHandicap, handicapIndex);
+
+    if (strokes === 1) {
+        return "•";
+    }
+
+    if (strokes === 2) {
+        return "••";
+    }
+
+    if (strokes === 3) {
+        return "•••";
+    }
+
+    return "";
+}
+
+function getStrokesForHole(holeHandicap, handicapIndex) {
     if (!holeHandicap || !handicapIndex) {
-        return "";
+        return 0;
     }
 
     let strokes = 0;
@@ -932,15 +969,11 @@ function getStrokeDots(holeHandicap, handicapIndex) {
         strokes = 2;
     }
 
-    if (strokes === 1) {
-        return "•";
+    if (handicapIndex > 36 && (handicapIndex - 36) >= holeHandicap) {
+        strokes = 3;
     }
 
-    if (strokes === 2) {
-        return "••";
-    }
-
-    return "";
+    return strokes;
 }
 
 function loadPlayerProfile() {
