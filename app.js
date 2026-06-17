@@ -16,6 +16,8 @@ let playerProfile = {
     hci: 26.4
 };
 
+let pastRoundScorecard = [];
+
 const courses = {
     whitinsville: {
         id: "whitinsville",
@@ -664,6 +666,13 @@ function hideAllScreens() {
 if (courseInfoScreen) {
     courseInfoScreen.classList.add("hidden");
 }
+
+const pastRoundScreen =
+    document.getElementById("pastRoundScreen");
+
+if (pastRoundScreen) {
+    pastRoundScreen.classList.add("hidden");
+}
 }
 
 function showRecentRounds() {
@@ -672,6 +681,205 @@ function showRecentRounds() {
     document.getElementById("recentRoundsScreen").classList.remove("hidden");
 
     renderRecentRounds();
+}
+
+function showPastRoundEntry() {
+    hideAllScreens();
+
+    const pastRoundScreen =
+        document.getElementById("pastRoundScreen");
+
+    pastRoundScreen.classList.remove("hidden");
+
+    document.getElementById("pastRoundDateInput").value = "";
+
+    document.getElementById("pastRoundHciInput").value =
+        playerProfile.hci !== null ? playerProfile.hci.toFixed(1) : "";
+
+    pastRoundScorecard = [];
+
+    document.getElementById("pastRoundGrid").innerHTML = "";
+}
+
+function setupPastRound(numberOfHoles) {
+    const course =
+        courses[selectedCourseId];
+
+    pastRoundScorecard = [];
+
+    if (numberOfHoles === 9) {
+        pastRoundScorecard =
+            course.whiteTees.map(function(hole) {
+                return {
+                    hole: hole.hole,
+                    par: hole.par,
+                    yards: hole.yards,
+                    tee: hole.tee,
+                    handicap: hole.handicap,
+                    score: null
+                };
+            });
+    }
+
+    if (numberOfHoles === 18) {
+        const frontNine =
+            course.whiteTees.map(function(hole) {
+                return {
+                    hole: hole.hole,
+                    par: hole.par,
+                    yards: hole.yards,
+                    tee: hole.tee,
+                    handicap: hole.handicap,
+                    score: null
+                };
+            });
+
+        const backNine =
+            course.blueTees.map(function(hole) {
+                return {
+                    hole: hole.hole,
+                    par: hole.par,
+                    yards: hole.yards,
+                    tee: hole.tee,
+                    handicap: hole.handicap,
+                    score: null
+                };
+            });
+
+        pastRoundScorecard =
+            frontNine.concat(backNine);
+    }
+
+    renderPastRoundEntry();
+}
+
+function formatDateForDisplay(dateValue) {
+    if (!dateValue) {
+        return "";
+    }
+
+    const parts = dateValue.split("-");
+
+    if (parts.length !== 3) {
+        return dateValue;
+    }
+
+    const year = parts[0];
+    const month = Number(parts[1]);
+    const day = Number(parts[2]);
+
+    return month + "/" + day + "/" + year;
+}
+
+function renderPastRoundEntry() {
+    const grid =
+        document.getElementById("pastRoundGrid");
+
+    grid.innerHTML = "";
+
+    pastRoundScorecard.forEach(function(hole, index) {
+        const holeDiv =
+            document.createElement("div");
+
+        holeDiv.className = "scorecard-hole past-round-hole";
+
+        holeDiv.innerHTML = `
+            <div class="hole-number">${hole.hole}</div>
+
+            <div class="hole-details">
+                <strong>Hole ${hole.hole}</strong>
+                <span>Par ${hole.par} • ${hole.yards || "-"} yds • HCP ${hole.handicap} | ${hole.tee || ""}</span>
+            </div>
+
+            <div class="past-score-input-wrap">
+                <input 
+                    class="past-score-input"
+                    type="number"
+                    min="1"
+                    placeholder="-"
+                    onchange="updatePastRoundScore(${index}, this.value)">
+            </div>
+        `;
+
+        grid.appendChild(holeDiv);
+    });
+}
+
+function updatePastRoundScore(index, value) {
+    const score =
+        Number(value);
+
+    if (!score || score < 1) {
+        pastRoundScorecard[index].score = null;
+        return;
+    }
+
+    pastRoundScorecard[index].score = score;
+}
+
+function savePastRound() {
+    const roundDate =
+        document.getElementById("pastRoundDateInput").value;
+
+    const hciUsed =
+        parseFloat(document.getElementById("pastRoundHciInput").value);
+
+    if (!roundDate) {
+        alert("Enter the round date.");
+        return;
+    }
+
+    if (pastRoundScorecard.length === 0) {
+        alert("Choose 9 or 18 holes first.");
+        return;
+    }
+
+    if (isNaN(hciUsed)) {
+        alert("Enter a valid HCI.");
+        return;
+    }
+
+    const incompleteHoles =
+        pastRoundScorecard.filter(function(hole) {
+            return hole.score === null;
+        });
+
+    if (incompleteHoles.length > 0) {
+        alert("Enter a score for every hole.");
+        return;
+    }
+
+    const savedRounds =
+        JSON.parse(localStorage.getItem("savedScorecardRounds")) || [];
+
+    const totalScore =
+        pastRoundScorecard.reduce(function(sum, hole) {
+            return sum + hole.score;
+        }, 0);
+
+    const round = {
+        id: Date.now(),
+        date: formatDateForDisplay(roundDate),
+        mode: "manual-entry",
+        courseId: selectedCourseId,
+        courseName: courses[selectedCourseId].name,
+        holesPlayed: pastRoundScorecard.length,
+        hciUsed: hciUsed,
+        holes: pastRoundScorecard,
+        totalScore: totalScore,
+        entryType: "past-round"
+    };
+
+    savedRounds.push(round);
+
+    localStorage.setItem(
+        "savedScorecardRounds",
+        JSON.stringify(savedRounds)
+    );
+
+    alert("Past round saved.");
+
+    showRecentRounds();
 }
 
 function renderRecentRounds() {
@@ -827,14 +1035,14 @@ function renderCourseInfo() {
     document.getElementById("courseInfoDefault").textContent =
         course.defaultCourse ? "Yes" : "No";
 
-    document.getElementById("courseInfoFrontPar").textContent =
-        frontPar;
+document.getElementById("courseInfoFrontNine").textContent =
+    "White - Par " + frontPar;
 
-    document.getElementById("courseInfoBackPar").textContent =
-        backPar;
+document.getElementById("courseInfoBackNine").textContent =
+    "Blue - Par " + backPar;
 
-    document.getElementById("courseInfoTotalPar").textContent =
-        totalPar;
+document.getElementById("courseInfoTotalPar").textContent =
+    totalPar;
 }
 
 function renderRoundDetail(roundId) {

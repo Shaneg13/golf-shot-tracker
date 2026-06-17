@@ -754,3 +754,27 @@ button:active {
     font-size: 15px;
     color: #7CFF8A;
 }
+
+.past-round-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+}
+
+.past-round-actions button {
+    width: 100%;
+    margin: 0;
+}
+
+.past-score-input-wrap {
+    width: 58px;
+}
+
+.past-score-input {
+    width: 58px;
+    padding: 8px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+}

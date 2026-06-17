@@ -3,7 +3,7 @@
 <head>
     <title>Golf Shot Tracker</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css?v=13">
+    <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
 <div id="splashScreen">
@@ -195,10 +195,42 @@
     <h2>Recent Rounds</h2>
     <p class="section-subtitle">Saved scorecard rounds</p>
 
+    <button onclick="showPastRoundEntry()" class="primary-button">
+        Add Round
+    </button>
+
     <div id="recentRoundsList" class="recent-rounds-list"></div>
 
     <button onclick="showHome()" class="secondary-button">
         Back Home
+    </button>
+
+</div>
+
+<div id="pastRoundScreen" class="card hidden">
+
+    <h2>Add Past Round</h2>
+    <p class="section-subtitle">Enter an old scorecard manually</p>
+
+    <label>Round Date</label>
+    <input id="pastRoundDateInput" type="date">
+
+    <label>HCI Used</label>
+    <input id="pastRoundHciInput" type="number" step="0.1" placeholder="26.4">
+
+    <div class="past-round-actions">
+        <button onclick="setupPastRound(9)">9 Holes</button>
+        <button onclick="setupPastRound(18)">18 Holes</button>
+    </div>
+
+    <div id="pastRoundGrid" class="scorecard-grid"></div>
+
+    <button onclick="savePastRound()" class="primary-button">
+        Save Past Round
+    </button>
+
+    <button onclick="showRecentRounds()" class="secondary-button">
+        Back to Recent Rounds
     </button>
 
 </div>
@@ -231,25 +263,15 @@
             <strong>Front 9 White / Back 9 Blue</strong>
         </div>
 
-        <div class="course-info-row">
-            <span>Front 9 Tee</span>
-            <strong>White</strong>
-        </div>
+<div class="course-info-row">
+    <span>Front 9 Tee</span>
+    <strong id="courseInfoFrontNine">White - Par -</strong>
+</div>
 
-        <div class="course-info-row">
-            <span>Back 9 Tee</span>
-            <strong>Blue</strong>
-        </div>
-
-        <div class="course-info-row">
-            <span>Front 9 Par</span>
-            <strong id="courseInfoFrontPar">-</strong>
-        </div>
-
-        <div class="course-info-row">
-            <span>Back 9 Par</span>
-            <strong id="courseInfoBackPar">-</strong>
-        </div>
+<div class="course-info-row">
+    <span>Back 9 Tee</span>
+    <strong id="courseInfoBackNine">Blue - Par -</strong>
+</div>
 
         <div class="course-info-row">
             <span>Total Par</span>
@@ -260,8 +282,6 @@
     <button onclick="showHome()" class="secondary-button">
         Back Home
     </button>
-
-</div>
 
 </div>
 
@@ -299,7 +319,7 @@
 
 </div>
 
-<script src="app.js?v=13"></script>
+<script src="app.js?v=14"></script>
 
 <div id="roundModePopup" class="modal hidden">
     <div class="modal-content round-mode-modal">
