@@ -872,3 +872,127 @@ button:active {
     font-size: 12px;
     opacity: 0.75;
 }
+
+.match-card {
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 14px;
+    margin-top: 14px;
+}
+
+.match-card h3 {
+    margin-top: 0;
+}
+
+.match-result {
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 16px;
+    background: rgba(124, 255, 138, 0.08);
+    border: 1px solid rgba(124, 255, 138, 0.22);
+}
+
+.match-result h3 {
+    margin-top: 0;
+}
+
+.match-result-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.match-result-row:last-child {
+    border-bottom: none;
+}
+
+.match-result-row span {
+    opacity: 0.72;
+    font-size: 13px;
+}
+
+.match-result-row strong {
+    color: #7CFF8A;
+    font-size: 14px;
+}
+
+.h2h-mode-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px;
+}
+
+.h2h-mode-card {
+    background: #181c18;
+    border: 1px solid rgba(124, 255, 138, 0.25);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: left;
+    color: #f5f5f5;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.h2h-mode-card:active {
+    transform: scale(0.98);
+}
+
+.mode-title {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: #7CFF8A;
+    margin-bottom: 6px;
+}
+
+.mode-subtitle {
+    display: block;
+    font-size: 13px;
+    color: #cfcfcf;
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.h2h-score-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: 10px;
+    align-items: center;
+    margin: 12px 0;
+}
+
+.h2h-score {
+    font-size: 24px;
+    font-weight: 700;
+    min-width: 36px;
+    text-align: center;
+}
+
+.button-row button {
+    flex: 1;
+    margin-right: 0;
+}
+
+@media (max-width: 600px) {
+    .button-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .button-row button {
+        width: 100%;
+        margin: 0;
+    }
+
+    #h2hHoleDisplay .button-row {
+        grid-template-columns: 1fr;
+    }
+}
