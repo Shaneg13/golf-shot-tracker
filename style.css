@@ -475,37 +475,7 @@ button:active {
     font-weight: 700;
 }
 
-.round-swipe-wrapper {
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 12px;
-    border-radius: 14px;
-}
 
-.round-delete-action {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 88px;
-    border: none;
-    background: #8b1e1e;
-    color: white;
-    font-size: 13px;
-    font-weight: 700;
-    z-index: 1;
-}
-
-.swipe-front-card {
-    position: relative;
-    z-index: 2;
-    transition: transform 0.2s ease;
-    touch-action: pan-y;
-}
-
-.swipe-front-card.show-delete {
-    transform: translateX(-88px);
-}
 
 
 @media (max-width: 600px) {
@@ -662,4 +632,62 @@ button:active {
     to {
         transform: rotate(360deg);
     }
+}
+
+.round-swipe-wrapper {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+    border-radius: 16px;
+    background: transparent;
+}
+
+.round-delete-action {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 88px !important;
+    height: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: none !important;
+    border-radius: 0 16px 16px 0 !important;
+
+    background: #8b1e1e !important;
+    color: white !important;
+
+    font-size: 13px !important;
+    font-weight: 700 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    z-index: 1;
+}
+
+.round-delete-action:hover {
+    background: #8b1e1e !important;
+}
+
+.swipe-front-card {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    margin: 0 !important;
+
+    background: #1A211C !important;
+
+    transition: transform 0.2s ease;
+    touch-action: pan-y;
+    user-select: none;
+}
+
+.swipe-front-card.show-delete {
+    transform: translateX(-88px);
 }

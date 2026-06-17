@@ -994,41 +994,63 @@ function enableSwipeRevealDelete() {
     swipeCards.forEach(function(card) {
         let startX = 0;
         let startY = 0;
+        let isDragging = false;
 
-        card.addEventListener("touchstart", function(event) {
-            startX = event.touches[0].clientX;
-            startY = event.touches[0].clientY;
+        card.addEventListener("pointerdown", function(event) {
+            startX = event.clientX;
+            startY = event.clientY;
+            isDragging = true;
+
+            if (card.setPointerCapture) {
+                card.setPointerCapture(event.pointerId);
+            }
         });
 
-        card.addEventListener("touchmove", function(event) {
-            const currentX = event.touches[0].clientX;
-            const currentY = event.touches[0].clientY;
+        card.addEventListener("pointermove", function(event) {
+            if (!isDragging) {
+                return;
+            }
 
-            const diffX = currentX - startX;
-            const diffY = currentY - startY;
+            const diffX = event.clientX - startX;
+            const diffY = event.clientY - startY;
 
+            // Ignore normal vertical scrolling
             if (Math.abs(diffY) > Math.abs(diffX)) {
                 return;
             }
 
+            // Swipe left
             if (diffX < -40) {
-                closeAllSwipeCards();
+                closeAllSwipeCards(card);
                 card.classList.add("show-delete");
+                isDragging = false;
             }
 
+            // Swipe right
             if (diffX > 40) {
                 card.classList.remove("show-delete");
+                isDragging = false;
             }
+        });
+
+        card.addEventListener("pointerup", function() {
+            isDragging = false;
+        });
+
+        card.addEventListener("pointercancel", function() {
+            isDragging = false;
         });
     });
 }
 
-function closeAllSwipeCards() {
+function closeAllSwipeCards(exceptCard) {
     const openCards =
         document.querySelectorAll(".swipe-front-card.show-delete");
 
     openCards.forEach(function(card) {
-        card.classList.remove("show-delete");
+        if (card !== exceptCard) {
+            card.classList.remove("show-delete");
+        }
     });
 }
 
