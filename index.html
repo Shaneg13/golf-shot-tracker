@@ -311,7 +311,6 @@
 <div id="headToHeadScreen" class="card hidden">
 
     <div class="screen-header">
-        <button class="back-btn" onclick="goHome()">Home</button>
         <h2>Head-to-Head</h2>
     </div>
 
@@ -330,8 +329,6 @@
     </div>
 
     <div id="h2hHoleByHolePanel" style="display: none;">
-
-        <button class="back-btn" onclick="showH2HModePicker()">Back to Head-to-Head</button>
 
         <h3>Hole-by-Hole Match</h3>
 
@@ -358,11 +355,13 @@
             <div id="h2hHoleDisplay"></div>
         </div>
 
+        <button onclick="showH2HModePicker()" class="secondary-button">
+            Back to Head-to-Head
+        </button>
+
     </div>
 
     <div id="h2hComparePanel" style="display: none;">
-
-        <button class="back-btn" onclick="showH2HModePicker()">← Back to Head-to-Head</button>
 
         <h3>Compare Gross and Net Scores</h3>
         <p class="section-subtitle">Compare gross and net scores</p>
@@ -409,10 +408,17 @@
 
         <div id="headToHeadResult" class="match-result hidden"></div>
 
+        <button onclick="showH2HModePicker()" class="secondary-button">
+            Back to Head-to-Head
+        </button>
+
     </div>
 
-</div>
+    <button onclick="showHome()" class="secondary-button">
+        Back Home
+    </button>
 
+</div>
 
 <div id="roundDetailScreen" class="card hidden">
 
