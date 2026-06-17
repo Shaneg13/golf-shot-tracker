@@ -778,6 +778,9 @@ function renderPastRoundEntry() {
     grid.innerHTML = "";
 
     pastRoundScorecard.forEach(function(hole, index) {
+        const scoreDisplay =
+            hole.score === null ? "-" : hole.score;
+
         const holeDiv =
             document.createElement("div");
 
@@ -791,13 +794,10 @@ function renderPastRoundEntry() {
                 <span>Par ${hole.par} • ${hole.yards || "-"} yds • HCP ${hole.handicap} | ${hole.tee || ""}</span>
             </div>
 
-            <div class="past-score-input-wrap">
-                <input 
-                    class="past-score-input"
-                    type="number"
-                    min="1"
-                    placeholder="-"
-                    onchange="updatePastRoundScore(${index}, this.value)">
+            <div class="score-controls">
+                <button onclick="decreasePastRoundScore(${index})">−</button>
+                <div class="score-value">${scoreDisplay}</div>
+                <button onclick="increasePastRoundScore(${index})">+</button>
             </div>
         `;
 
@@ -805,16 +805,29 @@ function renderPastRoundEntry() {
     });
 }
 
-function updatePastRoundScore(index, value) {
-    const score =
-        Number(value);
+function increasePastRoundScore(index) {
+    if (pastRoundScorecard[index].score === null) {
+        pastRoundScorecard[index].score =
+            pastRoundScorecard[index].par;
+    } else {
+        pastRoundScorecard[index].score++;
+    }
 
-    if (!score || score < 1) {
-        pastRoundScorecard[index].score = null;
+    renderPastRoundEntry();
+}
+
+function decreasePastRoundScore(index) {
+    if (pastRoundScorecard[index].score === null) {
         return;
     }
 
-    pastRoundScorecard[index].score = score;
+    pastRoundScorecard[index].score--;
+
+    if (pastRoundScorecard[index].score < 1) {
+        pastRoundScorecard[index].score = null;
+    }
+
+    renderPastRoundEntry();
 }
 
 function savePastRound() {

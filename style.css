@@ -778,3 +778,18 @@ button:active {
     font-size: 18px;
     font-weight: 700;
 }
+
+#pastRoundScreen {
+    overflow-x: hidden;
+}
+
+#pastRoundScreen input {
+    width: 100%;
+    max-width: 100%;
+}
+
+#pastRoundDateInput,
+#pastRoundHciInput {
+    display: block;
+    box-sizing: border-box;
+}
