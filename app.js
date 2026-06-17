@@ -886,6 +886,18 @@ const strokeDots =
 
     document.getElementById("roundDetailToPar").textContent =
         toParText;
+
+    const deleteRoundButton =
+        document.createElement("button");
+
+    deleteRoundButton.className = "round-detail-delete-btn";
+    deleteRoundButton.textContent = "Delete This Round";
+
+    deleteRoundButton.onclick = function() {
+        deleteRound(round.id);
+    };
+
+    roundDetailList.appendChild(deleteRoundButton);
 }
 
 function showHoleCountPopup() {

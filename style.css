@@ -691,3 +691,22 @@ button:active {
 .swipe-front-card.show-delete {
     transform: translateX(-88px);
 }
+
+.round-detail-delete-btn {
+    width: 100%;
+    margin-top: 18px;
+    padding: 14px 16px;
+
+    border: 1px solid rgba(255, 80, 80, 0.45);
+    border-radius: 14px;
+
+    background: rgba(139, 30, 30, 0.20);
+    color: #ff9a9a;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.round-detail-delete-btn:hover {
+    background: rgba(139, 30, 30, 0.35);
+}
