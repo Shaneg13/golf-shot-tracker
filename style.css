@@ -718,3 +718,39 @@ button:active {
 .net-score-card {
     grid-column: span 2;
 }
+
+.course-info-card {
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 14px;
+    margin-top: 14px;
+}
+
+.course-info-card h3 {
+    margin-top: 0;
+    margin-bottom: 14px;
+}
+
+.course-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.course-info-row:last-child {
+    border-bottom: none;
+}
+
+.course-info-row span {
+    font-size: 13px;
+    opacity: 0.72;
+}
+
+.course-info-row strong {
+    font-size: 15px;
+    color: #7CFF8A;
+}

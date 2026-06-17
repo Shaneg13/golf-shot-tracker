@@ -657,6 +657,13 @@ function hideAllScreens() {
     if (roundDetailScreen) {
         roundDetailScreen.classList.add("hidden");
     }
+
+    const courseInfoScreen =
+    document.getElementById("courseInfoScreen");
+
+if (courseInfoScreen) {
+    courseInfoScreen.classList.add("hidden");
+}
 }
 
 function showRecentRounds() {
@@ -778,6 +785,56 @@ function showRoundDetail(roundId) {
     roundDetailScreen.classList.remove("hidden");
 
     renderRoundDetail(roundId);
+}
+
+function showCourseInfo() {
+    hideAllScreens();
+
+    const courseInfoScreen =
+        document.getElementById("courseInfoScreen");
+
+    courseInfoScreen.classList.remove("hidden");
+
+    renderCourseInfo();
+}
+
+function renderCourseInfo() {
+    const course =
+        courses[selectedCourseId];
+
+    if (!course) {
+        alert("Course not found.");
+        showHome();
+        return;
+    }
+
+    const frontPar =
+        course.whiteTees.reduce(function(sum, hole) {
+            return sum + hole.par;
+        }, 0);
+
+    const backPar =
+        course.blueTees.reduce(function(sum, hole) {
+            return sum + hole.par;
+        }, 0);
+
+    const totalPar =
+        frontPar + backPar;
+
+    document.getElementById("courseInfoName").textContent =
+        course.name;
+
+    document.getElementById("courseInfoDefault").textContent =
+        course.defaultCourse ? "Yes" : "No";
+
+    document.getElementById("courseInfoFrontPar").textContent =
+        frontPar;
+
+    document.getElementById("courseInfoBackPar").textContent =
+        backPar;
+
+    document.getElementById("courseInfoTotalPar").textContent =
+        totalPar;
 }
 
 function renderRoundDetail(roundId) {

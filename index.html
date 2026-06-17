@@ -41,10 +41,10 @@
             <p>View saved rounds</p>
         </div>
 
-<div class="home-tile">
-            <h3>Courses</h3>
-            <p>Manage course info</p>
-        </div>
+<div class="home-tile" onclick="showCourseInfo()">
+    <h3>Courses</h3>
+    <p>Course info and tee data</p>
+</div>
         
 <div class="home-tile" onclick="updateHci()">
     <h3>Handicap Index</h3>
@@ -203,6 +203,68 @@
 
 </div>
 
+<div id="courseInfoScreen" class="card hidden">
+
+    <h2>Course Info</h2>
+    <p class="section-subtitle">Default course and tee setup</p>
+
+    <div class="course-info-card">
+        <h3 id="courseInfoName">Whitinsville Golf Club</h3>
+
+        <div class="course-info-row">
+            <span>Default Course</span>
+            <strong id="courseInfoDefault">Yes</strong>
+        </div>
+
+        <div class="course-info-row">
+            <span>Course Layout</span>
+            <strong>9-hole course</strong>
+        </div>
+
+        <div class="course-info-row">
+            <span>9-Hole Round</span>
+            <strong>White tees</strong>
+        </div>
+
+        <div class="course-info-row">
+            <span>18-Hole Round</span>
+            <strong>Front 9 White / Back 9 Blue</strong>
+        </div>
+
+        <div class="course-info-row">
+            <span>Front 9 Tee</span>
+            <strong>White</strong>
+        </div>
+
+        <div class="course-info-row">
+            <span>Back 9 Tee</span>
+            <strong>Blue</strong>
+        </div>
+
+        <div class="course-info-row">
+            <span>Front 9 Par</span>
+            <strong id="courseInfoFrontPar">-</strong>
+        </div>
+
+        <div class="course-info-row">
+            <span>Back 9 Par</span>
+            <strong id="courseInfoBackPar">-</strong>
+        </div>
+
+        <div class="course-info-row">
+            <span>Total Par</span>
+            <strong id="courseInfoTotalPar">-</strong>
+        </div>
+    </div>
+
+    <button onclick="showHome()" class="secondary-button">
+        Back Home
+    </button>
+
+</div>
+
+</div>
+
 <div id="roundDetailScreen" class="card hidden">
 
     <h2>Round Detail</h2>
@@ -275,7 +337,7 @@
 
         <button class="mode-option" onclick="startScorecardRound(18)">
             <strong>18 Holes</strong>
-            <span>Front 9 white, back 9 blue/black</span>
+            <span>Front 9 White, Back 9 Blue</span>
         </button>
 
         <button class="secondary-button" onclick="closeHoleCountPopup()">
